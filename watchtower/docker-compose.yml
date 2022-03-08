@@ -1,0 +1,22 @@
+version: "3.5"
+
+services:
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DATA_DIR}/watchtower/config.json:/config.json
+    environment:
+      - WATCHTOWER_SCHEDULE=0 0 4 * * 0
+      - WATCHTOWER_NOTIFICATIONS=shoutrrr
+      - WATCHTOWER_NOTIFICATION_URL=pushover://shoutrrr:${PUSHOVER_TOKEN}@${PUSHOVER_USER}
+      - WATCHTOWER_NOTIFICATIONS_LEVEL=info
+    ports:
+      - 8190:80
+    networks:
+      - traefik
+    restart: on-failure
+
+networks:
+  traefik:
+    external: true

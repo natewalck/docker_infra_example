@@ -1,0 +1,21 @@
+version: "3.5"
+
+services:
+  overseerr:
+    image: sctx/overseerr:latest
+    container_name: overseerr
+    environment:
+      - UID=1000
+      - GID=1000
+      - TZ=${TZ}
+    volumes:
+      - ${DATA_DIR}/overseerr:/app/config
+    ports: 
+      - 5055:5055
+    networks:
+      - traefik
+    restart: on-failure
+
+networks:
+  traefik:
+    external: true

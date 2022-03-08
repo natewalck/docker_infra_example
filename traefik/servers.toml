@@ -1,0 +1,71 @@
+[http.routers]
+  [http.routers.plex]
+    rule = "Host(`plex.mydomain.com`)"
+    entrypoints = ["https"]
+    service = "plex"
+    [http.routers.plex.tls]
+      certResolver = "le"
+
+  [http.routers.homeassistant]
+    rule = "Host(`homeassistant.mydomain.com`)"
+    entrypoints = ["https"]
+    service = "homeassistant"
+    [http.routers.homeassistant.tls]
+      certResolver = "le"
+
+  [http.routers.grafana]
+    rule = "Host(`grafana.mydomain.com`)"
+    entrypoints = ["https"]
+    service = "grafana"
+    middlewares = "oauthSuperUser@docker"
+    [http.routers.grafana.tls]
+      certResolver = "le"
+
+  [http.routers.railcore]
+    rule = "Host(`railcore.mydomain.com`)"
+    entrypoints = ["https"]
+    service = "railcore"
+    middlewares = "oauthSuperUser@docker"
+    [http.routers.railcore.tls]
+      certResolver = "le"
+
+  [http.routers.railcorecam]
+    rule = "Host(`railcorecam.mydomain.com`)"
+    entrypoints = ["https"]
+    service = "railcorecam"
+    [http.routers.railcorecam.tls]
+      certResolver = "le"
+
+  [http.routers.doomcube]
+    rule = "Host(`doomcube.mydomain.com`)"
+    entrypoints = ["https"]
+    service = "doomcube"
+    middlewares = "oauthSuperUser@docker"
+    [http.routers.doomcube.tls]
+      certResolver = "le"
+
+[http.services]
+  # Define how to reach an existing service on our infrastructure
+  [http.services.plex.loadBalancer]
+    [[http.services.plex.loadBalancer.servers]]
+      url = "http://192.168.1.13:32400"
+
+  [http.services.homeassistant.loadBalancer]
+    [[http.services.homeassistant.loadBalancer.servers]]
+      url = "http://192.168.1.22:8123"
+
+  [http.services.grafana.loadBalancer]
+    [[http.services.grafana.loadBalancer.servers]]
+      url = "http://192.168.1.12:3000"
+
+  [http.services.railcore.loadBalancer]
+    [[http.services.railcore.loadBalancer.servers]]
+      url = "http://192.168.1.11"
+
+  [http.services.railcorecam.loadBalancer]
+    [[http.services.railcorecam.loadBalancer.servers]]
+      url = "http://192.168.100.10:8080"
+
+  [http.services.doomcube.loadBalancer]
+    [[http.services.doomcube.loadBalancer.servers]]
+      url = "http://192.168.1.23"

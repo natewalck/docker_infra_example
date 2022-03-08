@@ -1,0 +1,24 @@
+version: "3.5"
+
+services:
+  nzbget:
+    image: ghcr.io/linuxserver/nzbget
+    container_name: nzbget
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      - DOCKER_MODS=ghcr.io/gilbn/theme.park:nzbget
+      - TP_THEME=${THEME}
+    volumes:
+      - ${DATA_DIR}/nzbget:/config
+      - ${STORAGE_DIR}/downloads:/downloads
+    networks:
+      - traefik
+    ports:
+      - 6789:6789
+    restart: unless-stopped
+
+networks:
+  traefik:
+    external: true

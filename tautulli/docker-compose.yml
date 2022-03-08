@@ -1,0 +1,22 @@
+version: "3.5"
+
+services:
+  tautulli:
+    image: ghcr.io/linuxserver/tautulli
+    container_name: tautulli
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      - DOCKER_MODS=ghcr.io/gilbn/theme.park:tautulli
+      - TP_THEME=${THEME}
+    volumes:
+      - ${DATA_DIR}/tautulli:/config
+    networks:
+      - traefik
+    ports:
+      - 8181:8181
+    restart: unless-stopped
+networks:
+  traefik:
+    external: true

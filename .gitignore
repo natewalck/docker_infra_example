@@ -1,0 +1,3 @@
+*.env
+.nfs*
+not_used

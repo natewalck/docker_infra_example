@@ -1,0 +1,21 @@
+version: "3.5"
+
+services:
+  organizr:
+    image: organizr/organizr:latest
+    networks:
+      - traefik
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      - branch=v2-master
+    volumes:
+      - ${DATA_DIR}/organizr:/config
+    ports:
+      - 9983:80
+    restart: always
+
+networks:
+  traefik:
+    external: true

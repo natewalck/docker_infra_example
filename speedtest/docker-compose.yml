@@ -1,0 +1,26 @@
+version: "3.5"
+
+services:
+  speedtest:
+    container_name: speedtest
+    image: henrywhitaker3/speedtest-tracker
+    networks:
+      - traefik
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      - OOKLA_EULA_GDPR=true
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "200k"
+    ports:
+      - 8765:80
+    volumes:
+      - ${DATA_DIR}/speedtest:/config
+    restart: unless-stopped
+networks:
+  traefik:
+    external: true

@@ -1,0 +1,36 @@
+version: "3.5"
+
+services:
+  plex:
+    container_name: plex
+    image: ghcr.io/linuxserver/plex
+    hostname: Plexy
+    network_mode: host
+    expose:
+      - 65535
+      - 32400
+      - 3005
+      - 8324
+      - 32469
+      - 32410
+      - 32412
+      - 32413
+      - 32414
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - VERSION=latest
+      - TZ=${TZ}
+      - UMASK=022 #optional
+      - ADVERTISE_IP="https://plex.${BASE_DOMAIN}"
+      - DOCKER_MODS=ghcr.io/gilbn/theme.park:plex
+      - TP_THEME=${THEME}
+    #devices:
+    #  - "/dev/dri:/dev/dri" 
+    #  - "/dev/dvb:/dev/dvb"
+    volumes:
+      - ${DATA_DIR}:/database
+      - ${DATA_DIR}/plex:/config
+      - ${MEDIA_DIR}:/data
+      #- /transcode:/transcode
+    restart: unless-stopped

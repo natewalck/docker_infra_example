@@ -1,0 +1,10 @@
+#!/bin/sh
+export BASE_DOMAIN="mydomain.com"
+export STORAGE_DIR="/mnt/storage"
+export MEDIA_DIR="${STORAGE_DIR}/media/"
+export DATA_DIR="/mnt/ssd/docker"
+export CLOUD_ENV="prod"
+export THEME="space-gray"
+export TZ="America/New_York"
+export PUSHOVER_USER="MY_PUSHOVER_USER"
+export PUSHOVER_TOKEN="MY_PUSHOVER_TOKEN"

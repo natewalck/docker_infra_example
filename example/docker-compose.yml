@@ -1,0 +1,34 @@
+version: "3.5"
+
+services:
+
+  # This is the simplest possible exposed service. It does not rely on any other
+  # containers and does not require access control.
+  simple:
+    image: containous/whoami
+    volumes:
+      # For configuration volumes checked into the repository, use relative
+      # paths.
+      - ./config.toml:/app/config.toml
+      # For data volumes, use the DATA_DIR environment variable.
+      - ${DATA_DIR}/simple:/data
+      - ${MEDIA_DIR}/TV:/tv
+    networks:
+      - traefik
+      # If you need a private network to orchestrate several containers, specify
+      # that in addition to the traefik network. All of the other containers in
+      # the compose file should also use the same network.
+      - internal
+    restart: on-failure
+
+networks:
+  # This network has to be pulled in from outside into every container that
+  # wants to be hosted through traefik.
+  traefik:
+    external: true
+
+  internal:
+    # The network can be named anything, but setting internal on the network
+    # will prevent it from being reachable from the outside (and containers
+    # won't be able to reach the internet through it, either).
+    internal: true
